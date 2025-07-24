@@ -20,8 +20,8 @@ html {
 
   .hero-image {
     align-self: center;
-    display: flex;
-    align-items: stretch;
+    align-items: flex-end;
+    min-height: 0;
   }
 }
 
@@ -37,9 +37,9 @@ html {
 }
 
 .hero {
-  display: flex;
   align-items: center;
   justify-content: center;
+  display: flex;
   min-height: 100vh;
   gap: 0rem;
   box-sizing: border-box;
@@ -76,13 +76,12 @@ html {
 
 .hero-image {
   flex: 1;
+  display: flex;
 }
 
 .hero-image img {
-  max-height: 100vh;
-  max-width: 100%;
-  width: auto;
-  height: auto;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   display: block;
 }
