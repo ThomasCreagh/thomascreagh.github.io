@@ -1,7 +1,7 @@
 body,
 html {
   font-family: Verdana, sans-serif;
-  font-size: clamp(0.7rem, 2.5vw, 2rem);
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
   margin: 0;
   background-color: #fafafa;
   color: #202020;
@@ -15,21 +15,32 @@ html {
 @media (max-aspect-ratio: 1) {
   .hero {
     flex-direction: column;
+    padding: 10% 5% 0% 5%;
+  }
+
+  .hero-image {
+    align-self: center;
+    display: flex;
+    align-items: stretch;
   }
 }
 
 @media (min-aspect-ratio: 1) {
   .hero {
     flex-direction: row;
+    padding: 0 10%;
+  }
+
+  .hero-image {
+    align-self: flex-end;
   }
 }
 
 .hero {
-  padding: 0 10%;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  min-height: 100vh;
   gap: 0rem;
   box-sizing: border-box;
 }
@@ -65,7 +76,6 @@ html {
 
 .hero-image {
   flex: 1;
-  align-self: flex-end;
 }
 
 .hero-image img {
