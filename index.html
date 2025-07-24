@@ -3,102 +3,29 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Toms Website</title>
-    <style type="text/css" media="screen">
-  * {
-    margin: 0px 0px 0px 0px;
-    padding: 0px 0px 0px 0px;
-  }
-
-  body, html {
-    padding: 10px 50px 10px 50px;
-
-    font-family: Verdana, sans-serif;
-    font-size: 200%;
-    font-size: 18pt;
-  }
-  img {
-    padding-top: 10px;
-  }
-  .projects {
-    padding-top: 40px;
-  }
-  .project-list {
-    padding-left: 40px;
-  }
-  .projects-ul {
-    padding-left: 40px;
-    -- list-style-type: none;
-  }
-  .bio {
-    overflow: auto;
-  }
-  .left {
-    float: left;
-    margin: 5px;
-  }
-  .right {
-    font-family: Roboto, Verdana, sans-serif;
-    margin: 5px;
-    float: right;
-    border: solid;
-    border-width: 2px;
-    border-radius: 8px;
-    border-style: solid;
-    border-color: #CCCCCC;
-    padding: 10px;
-    background-color: #EEEEEE;
-    height: 400px;
-    width: 400px;
-  }
-
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
   </head>
   <body>
-    <h1>Thomas Creagh</h1>
-    <p>this is my personal website</p>
-    <div class="bio">
-      <div class="right">
-          <pre>
-I'm tom, i make cool
-projects like this
-one.
 
-You can visit my github or
-linkedin to see my projects
-if you would like :)
+    <div class="hero">
+      <div class="hero-text">
+        <h1><b>Hi, I'm Tom</b></h1>
+        <p>Student developer, <b>always</b> learning, <b>always</b> making.</p>
+        <!-- <p>Studying Computer Science at Trinity College Dublin</p> -->
+        <a href="#work">Check out my projects</a>
+      </div>
 
-Recent update:
-- learning about networking
-- making a rust blockchain
-          </pre>
-      </div>
-      <div class="left">
-        <img class="image" src="images/tom.jpg" height="400"/>
-        <p><a href="https://github.com/ThomasCreagh/">github</a>, <a href="https://www.linkedin.com/in/thomas-creagh/">linkedin</a></p>
-      </div>
-    </div>
-    <div class="projects">
-      <h2>Projects</h2>
-      <div class="project-list">
-        <h4><a href="https://github.com/ThomasCreagh/zallet">Zallet</a></h4>
-        <ul class="projects-ul"><li><p>Zallet is my first blockchain project with a wallet. I wrote it in zig and used Ed25519 Signing to encrypt transactions between wallets. I used Sha256 to hash the blocks on the chain. I used the proof by work method to verify blocks on the blockchain.</p></li></ul>
-        </br>
-        <h4><a href="https://github.com/FionaWright/High5ive">3D Flight Map</a></h4>
-        <ul class="projects-ul"><li><p>3D Flight Map is a flight statistics viewer with graphs, queries and a 3D globe that displays the airports and flights all around the world. I worked on fast data retrieval of data and optimizing ram usage by reducing and compressing data. I also made a querying system that was modular and used concurrency to speed up the queries and increase retrieval time.</p></li></ul>
-        </br>
-        <h4><a href="https://github.com/ThomasCreagh/AI-Agents-for-Code-Review-and-Security-using-Open-Source-Models">Software Engineering Project 2025 IBM</a></h4>
-        <ul class="projects-ul"><li><p>I worked along with a team from trinity to create AI Agents for Code Review and Security using Open Source Models for our IBM clients, Mihai Criveti and Panpan Lin as a part of my software engineering module. I made the backend with Fast Api and containerised it with Docker. I created the gitlab pipeline and deployed it in a production ready state to a custom domain on a hetzner vps with https.</p></li></ul>
-        </br>
-        <h4><a href="https://github.com/ThomasCreagh/website/">This website!</a></h4>
-        <ul class="projects-ul"><li><p>This website is made in pure good old HTML and CSS. It uses apache http server and is run using a Tor hidden service for fun (Its also on github pages)! I had a lot of fun creating this site and all the quirks that goes into making a tor site.</p></li></ul>
+      <div class="hero-image">
+        <img src="images/tom.png" alt="Tom's face">
       </div>
     </div>
 
-    <footer>
-      </br>
-      <p>Web url: <a href="https://thomascreagh.github.io/">https://thomascreagh.github.io/</a></p>
-      <p>Tor url: <a href="http://ratw7yvui4rzkdzau75g2eklgbweipatyvfa6uqyboial6cbugau7vyd.onion/">http://ratw7yvui4rzkdzau75g2eklgbweipatyvfa6uqyboial6cbugau7vyd.onion/</a></p>
-    </footer>
+
+    
+      <!-- <footer> -->
+      <!--   <p>Web url: <a href="https://thomascreagh.github.io/">https://thomascreagh.github.io/</a></p> -->
+      <!--   <p>Tor url: <a href="http://ratw7yvui4rzkdzau75g2eklgbweipatyvfa6uqyboial6cbugau7vyd.onion/">http://ratw7yvui4rzkdzau75g2eklgbweipatyvfa6uqyboial6cbugau7vyd.onion/</a></p> -->
+      <!-- </footer> -->
   </body>
 </html>
 
