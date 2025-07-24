@@ -7,6 +7,12 @@ html {
   color: #202020;
 }
 
+/* .body { */
+/*   display: flex; */
+/*   flex-direction: column; */
+/*   justify-content: stretch; */
+/* } */
+
 .hero-text h1,
 .hero-text p {
   margin-top: 0;
@@ -23,6 +29,11 @@ html {
     align-items: flex-end;
     min-height: 0;
   }
+
+  .nav {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
 }
 
 @media (min-aspect-ratio: 1) {
@@ -33,6 +44,10 @@ html {
 
   .hero-image {
     align-self: flex-end;
+  }
+
+  .nav {
+    justify-content: flex-end;
   }
 }
 
@@ -100,13 +115,12 @@ html {
 }
 
 .header-1 {
-  padding-top: 40px;
-  padding-bottom: 20px;
+  padding-top: 0.75rem;
+  padding-bottom: 0.2rem;
 }
 
 .nav li {
-  float: left;
-  padding: 0.1rem;
+  padding: 0% 1% 1% 1%;
 }
 
 .nav a {
@@ -123,10 +137,9 @@ a:active {
 }
 
 .nav {
-  font-size: clamp(0.6rem, 1vw, 0.7rem);
-  float: right;
+  font-size: 1rem;
   list-style-type: none;
   margin: 0;
-  padding: 0;
-  margin-bottom: 50px;
+  padding: 2% 2% 0% 2%;
+  display: flex;
 }
