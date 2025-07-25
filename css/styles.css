@@ -7,12 +7,6 @@ html {
   color: #202020;
 }
 
-/* .body { */
-/*   display: flex; */
-/*   flex-direction: column; */
-/*   justify-content: stretch; */
-/* } */
-
 .hero-text h1,
 .hero-text p {
   margin-top: 0;
@@ -101,13 +95,27 @@ html {
   display: block;
 }
 
+.projects {
+  padding: 0 10%;
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+}
+
 .project-list {
   padding-left: 40px;
 }
 
+.project-list h4 {
+  margin: 5px 0;
+}
+
 .project-list ul {
   padding-left: 40px;
+  margin: 10px 0;
   list-style-type: none;
+}
+
+.project-list p {
+  margin: 10px 0;
 }
 
 .bio {
@@ -134,6 +142,14 @@ a:visited,
 a:hover,
 a:active {
   color: #75a2b2;
+}
+
+footer {
+  font-family: serif;
+  font-size: clamp(0.7rem, 1vw, 1rem);
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .nav {
