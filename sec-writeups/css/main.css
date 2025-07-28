@@ -1,11 +1,16 @@
 body {
-  padding-top: 50px;
-  padding-bottom: 50px;
-  padding-left: 100px;
-  padding-right: 100px;
   font-size: 21px;
   line-height: 35px;
   font-family: helvetica, arial;
+  background-color: #fafafa;
+  color: #202020;
+}
+
+.page {
+  margin: 0;
+  padding-bottom: 50px;
+  padding-left: 100px;
+  padding-right: 100px;
 }
 
 code {
@@ -69,12 +74,56 @@ blockquote::after {
   line-height: 1;
 }
 
-img {
-  display: block;
+.scroll-img {
+  overflow-x: auto;
   max-width: 100%;
+  margin: 1em 0;
+}
+
+.scroll-img img {
+  min-width: 600px;
   height: auto;
+  display: block;
 }
 
 hr {
   color: #eee;
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+  color: #75a2b2;
+}
+
+@media (max-aspect-ratio: 1) {
+  .nav {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+}
+
+@media (min-aspect-ratio: 1) {
+  .nav {
+    justify-content: flex-end;
+  }
+}
+
+.nav {
+  font-size: 1rem;
+  list-style-type: none;
+  margin: 0;
+  padding: 2% 2% 0% 2%;
+  display: flex;
+}
+
+.nav li {
+  padding: 0% 1% 1% 1%;
+}
+
+.nav a {
+  display: block;
+  padding-right: 16px;
+  text-decoration: none;
 }

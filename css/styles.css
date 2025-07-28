@@ -1,6 +1,7 @@
 body,
 html {
-  font-family: Verdana, sans-serif;
+  /* font-family: Verdana, sans-serif; */
+  font-family: helvetica, arial;
   font-size: clamp(1.5rem, 2.5vw, 2rem);
   margin: 0;
   background-color: #fafafa;
@@ -43,6 +44,24 @@ html {
   .nav {
     justify-content: flex-end;
   }
+}
+
+.nav {
+  font-size: 1rem;
+  list-style-type: none;
+  margin: 0;
+  padding: 2% 2% 0% 2%;
+  display: flex;
+}
+
+.nav li {
+  padding: 0% 1% 1% 1%;
+}
+
+.nav a {
+  display: block;
+  padding-right: 16px;
+  text-decoration: none;
 }
 
 .hero {
@@ -127,16 +146,6 @@ html {
   padding-bottom: 0.2rem;
 }
 
-.nav li {
-  padding: 0% 1% 1% 1%;
-}
-
-.nav a {
-  display: block;
-  padding-right: 16px;
-  text-decoration: none;
-}
-
 a:link,
 a:visited,
 a:hover,
@@ -150,12 +159,4 @@ footer {
   display: flex;
   justify-content: center;
   margin-top: 20px;
-}
-
-.nav {
-  font-size: 1rem;
-  list-style-type: none;
-  margin: 0;
-  padding: 2% 2% 0% 2%;
-  display: flex;
 }
