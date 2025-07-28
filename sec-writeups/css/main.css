@@ -1,5 +1,6 @@
 body {
-  font-size: 21px;
+  /* font-size: 21px; */
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
   line-height: 35px;
   font-family: helvetica, arial;
   background-color: #fafafa;

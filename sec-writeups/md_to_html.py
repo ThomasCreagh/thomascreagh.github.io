@@ -21,8 +21,11 @@ index_nav = """
     </ul>
   </nav>
 """
-html_content = '<head><link rel="stylesheet" href="../css/styles.css"></head>\n' + \
-    f'<body>{index_nav}<div class="projects"><h1>Security write ups</h1>' + \
+html_content = '<head><link rel="stylesheet" href="../css/styles.css">' + \
+    '<link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png" />' + \
+    '<link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png" />' + \
+    '<title>SecurityWriteups</title></head>' + \
+    f'<body>{index_nav}<div class="projects"><h1>Security Write Ups</h1>' + \
     f'<div class=project-list><ul>{str(page_links)[2:-2].replace(",","")}' + \
     '</ul></div></div></body>'
 with open("index.html", "w", encoding="utf-8") as html_file:
@@ -56,7 +59,10 @@ for file in files:
     </nav>
     """
 
-    full_html = '<head><link rel="stylesheet" href="../css/main.css"></head>\n' + \
+    full_html = '<head><link rel="stylesheet" href="../css/main.css">' + \
+        '<link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png" />' + \
+        '<link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png" />' + \
+        f'<title>{file.replace(".md", "").replace("_", " ")}</title></head>' + \
         f'<body>{nav}<div class="page">{str(soup)}</div></body>'
 
     with open(f"html/{file.replace('.md', '.html')}", "w", encoding="utf-8") as html_file:
