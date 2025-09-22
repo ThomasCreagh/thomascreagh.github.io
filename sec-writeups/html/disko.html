@@ -1,0 +1,57 @@
+<head><link rel="stylesheet" href="../../css/styles.css"><link rel="icon" href="/../../favicon-32x32.png" sizes="32x32" type="image/png" /><link rel="icon" href="/../../favicon-16x16.png" sizes="16x16" type="image/png" /><title>disko</title></head><body>
+    <nav>
+        <ul class="nav">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="https://github.com/ThomasCreagh/">Github</a></li>
+        <li>
+            <a href="https://www.linkedin.com/in/thomas-creagh/">Linkedin</a>
+        </li>
+        <li><a href="../../projects.html">Projects</a></li>
+        <li><a href="../index.html">SecurityWriteups</a></li>
+        </ul>
+    </nav>
+    <div class="sec-page"><h1>DISKO 1,2,3</h1>
+<hr/>
+<p>this is a <a href="https://picoctf.org/">pico ctf</a> challenge</p>
+<hr/>
+<h4>Description</h4>
+<p>Q1:</p>
+<blockquote>
+<p>Can you find the flag in this disk image?
+Download the disk image <a href="https://artifacts.picoctf.net/c/537/disko-1.dd.gz">here</a>.</p>
+</blockquote>
+<p>Q2:</p>
+<blockquote></blockquote>
+<p>Q3:</p>
+<blockquote></blockquote>
+<h4>Disko 1</h4>
+<p>First thing I did was do <code>file disko-1.dd.gz</code> this gives me an idea of what I'm working with:</p>
+<pre><code>disko-1.dd.gz: gzip compressed data
+was "disko-1.dd", last modified: Thu May 15 18:48:20 2025,
+from Unix, original size modulo 2^32 52428800
+</code></pre>
+<p>This is a gunzip compressed file so I unzipped it with gunzip <code>gunzip disko-1.dd.gz</code>
+then checked the file info agin <code>file disk-1.dd</code></p>
+<pre><code>disko-1.dd: DOS/MBR boot sector, code offset 0x58+2,
+OEM-ID "mkfs.fat", Media descriptor 0xf8, sectors/track 32,
+heads 8, sectors 102400 (volumes &gt; 32 MB), FAT (32 bit),
+sectors/FAT 788, serial number 0x241a4420, unlabeled
+</code></pre>
+<p>When I looked inside the contents of the file it looked like it had some comprehensible text.
+So I used the strings program and pipped that into grep to check for any strings with the word <code>pico</code> in the string:</p>
+<pre><code>$ strings disko-1.dd | grep "pico"
+
+:/icons/appicon
+# $Id: piconv,v 2.8 2016/08/04 03:15:58 dankogai Exp $
+piconv -- iconv(1), reinvented in perl
+  piconv [-f from_encoding] [-t to_encoding]
+  piconv -l
+  piconv -r encoding_alias
+  piconv -h
+B&lt;piconv&gt; is perl version of B&lt;iconv&gt;, a character encoding converter
+a technology demonstrator for Perl 5.8.0, but you can use piconv in the
+piconv converts the character encoding of either STDIN or files
+Therefore, when both -f and -t are omitted, B&lt;piconv&gt; just acts
+picoCTF{1t5_ju5t_4_5tr1n9_be6031da}
+</code></pre>
+<p>The flag printed right out of the command <code>picoCTF{1t5_ju5t_4_5tr1n9_be6031da}</code> was the correct flag.</p></div></body>

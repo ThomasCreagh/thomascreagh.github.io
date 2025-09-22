@@ -2,7 +2,7 @@
 
 ---
 
-this is a [pico ctf](https://play.picoctf.org/practice/challenge/491?originalEvent=74&page=2) challenge
+this is a [pico ctf](https://picoctf.org/) challenge
 
 ---
 
