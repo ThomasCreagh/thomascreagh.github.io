@@ -6,21 +6,11 @@ this is a [pico ctf](https://picoctf.org/) challenge
 
 ---
 
-#### Description
-
-Q1:
-> Can you find the flag in this disk image?
-> Download the disk image [here](https://artifacts.picoctf.net/c/537/disko-1.dd.gz).
-
-Q2:
-> 
-> 
-
-Q3:
-> 
-> 
-
 #### Disko 1
+
+##### Description
+> Can you find the flag in this disk image?
+
 First thing I did was do `file disko-1.dd.gz` this gives me an idea of what I'm working with:
 ```
 disko-1.dd.gz: gzip compressed data
@@ -58,4 +48,37 @@ The flag printed right out of the command `picoCTF{1t5_ju5t_4_5tr1n9_be6031da}` 
 
 #### Disko 2
 
+##### Description
+> Can you find the flag in this disk image? The right one is Linux! One wrong step and its all gone! 
 
+Okay so I did the same commands as last. I got to the Strings section and It returned loads of flags:
+```
+picoCTF{4_P4Rt_1t_i5_c03b93aa}
+picoCTF{4_P4Rt_1t_i5_aa9cb033}
+picoCTF{4_P4Rt_1t_i5_30ac9ba3}
+...
+picoCTF{4_P4Rt_1t_i5_33ba9ac0}
+picoCTF{4_P4Rt_1t_i5_30ba3a9c}
+picoCTF{4_P4Rt_1t_i5_ba390c3a}
+```
+While looking through them all I noticed that they all contain the same number of each character seemingly justjumbled up.
+
+The frequence of the character are `2: 3, a. 1: 0, 9, b, c.`
+
+I formatted all the flags in a flags.txt, then I make a simple python script to see the frequency of all the flags:
+```py
+from collections import defaultdict
+freq = defaultdict(int)
+with open("flags.txt", "r") as file:
+    data = file.read()
+    for flag in data.split("\n"):
+        freq[flag] += 1
+    for k, v in freq.items():
+        if v >= 2:
+            print(k, v)
+```
+this printed:
+`picoCTF{4_P4Rt_1t_i5_ac3ab903} 2`
+This was not the correct flag.
+
+I think I am looking into the wrong thing in this disk. I need to focus on what a disk contains and try to extract that.
