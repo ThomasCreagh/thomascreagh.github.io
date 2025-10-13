@@ -48,3 +48,9 @@ pre {
   overflow-x: auto;
   margin: 1em 0;
 }
+
+pre code {
+  background: none;
+  border: none
+}
+
