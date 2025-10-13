@@ -1,10 +1,6 @@
-# PIE TIME 2
-
----
+### PIE TIME 2
 
 this is a [pico ctf](https://picoctf.org/) challenge
-
----
 
 #### Description
 

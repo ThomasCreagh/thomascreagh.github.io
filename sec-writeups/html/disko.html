@@ -1,39 +1,105 @@
-<head><link rel="stylesheet" href="../../css/styles.css"><link rel="icon" href="/../../favicon-32x32.png" sizes="32x32" type="image/png" /><link rel="icon" href="/../../favicon-16x16.png" sizes="16x16" type="image/png" /><title>disko</title></head><body>
-    <nav>
-        <ul class="nav">
-        <li><a href="../../index.html">Home</a></li>
-        <li><a href="https://github.com/ThomasCreagh/">Github</a></li>
-        <li>
-            <a href="https://www.linkedin.com/in/thomas-creagh/">Linkedin</a>
-        </li>
-        <li><a href="../../projects.html">Projects</a></li>
-        <li><a href="../index.html">SecurityWriteups</a></li>
-        </ul>
-    </nav>
-    <div class="sec-page"><h1>DISKO 1,2,3</h1>
-<hr/>
-<p>this is a <a href="https://picoctf.org/">pico ctf</a> challenge</p>
-<hr/>
-<h4>Disko 1</h4>
-<h5>Description</h5>
-<blockquote>
-<p>Can you find the flag in this disk image?</p>
-</blockquote>
-<p>First thing I did was do <code>file disko-1.dd.gz</code> this gives me an idea of what I'm working with:</p>
-<pre><code>disko-1.dd.gz: gzip compressed data
+<head>
+ <link href="../../css/styles.css" rel="stylesheet"/>
+ <link href="../../favicon-32x32.png" rel="icon" sizes="32x32" type="image/png">
+  <link href="../../favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+  <title>
+   SecurityWriteups
+  </title>
+ </link>
+</head>
+<body>
+ <h1>
+  Thomas Creagh
+ </h1>
+ <p>
+  Student developer,
+  <b>
+   always
+  </b>
+  learning,
+  <b>
+   always
+  </b>
+  making.
+ </p>
+ <hr/>
+ <nav>
+  <a href="../../index.html">
+   Home
+  </a>
+  <a href="https://github.com/ThomasCreagh/">
+   Github
+  </a>
+  <a href="https://www.linkedin.com/in/thomas-creagh/">
+   Linkedin
+  </a>
+  <a href="../../projects.html">
+   Projects
+  </a>
+  <a href="../index.html">
+   SecurityWriteups
+  </a>
+ </nav>
+ <hr/>
+ <div class="page">
+  <h1>
+   DISKO 1,2,3
+  </h1>
+  <hr/>
+  <p>
+   this is a
+   <a href="https://picoctf.org/">
+    pico ctf
+   </a>
+   challenge
+  </p>
+  <hr/>
+  <h4>
+   Disko 1
+  </h4>
+  <h5>
+   Description
+  </h5>
+  <blockquote>
+   <p>
+    Can you find the flag in this disk image?
+   </p>
+  </blockquote>
+  <p>
+   First thing I did was do
+   <code>
+    file disko-1.dd.gz
+   </code>
+   this gives me an idea of what I'm working with:
+  </p>
+  <pre><code>disko-1.dd.gz: gzip compressed data
 was "disko-1.dd", last modified: Thu May 15 18:48:20 2025,
 from Unix, original size modulo 2^32 52428800
 </code></pre>
-<p>This is a gunzip compressed file so I unzipped it with gunzip <code>gunzip disko-1.dd.gz</code>
-then checked the file info agin <code>file disk-1.dd</code></p>
-<pre><code>disko-1.dd: DOS/MBR boot sector, code offset 0x58+2,
+  <p>
+   This is a gunzip compressed file so I unzipped it with gunzip
+   <code>
+    gunzip disko-1.dd.gz
+   </code>
+   then checked the file info agin
+   <code>
+    file disk-1.dd
+   </code>
+  </p>
+  <pre><code>disko-1.dd: DOS/MBR boot sector, code offset 0x58+2,
 OEM-ID "mkfs.fat", Media descriptor 0xf8, sectors/track 32,
 heads 8, sectors 102400 (volumes &gt; 32 MB), FAT (32 bit),
 sectors/FAT 788, serial number 0x241a4420, unlabeled
 </code></pre>
-<p>When I looked inside the contents of the file it looked like it had some comprehensible text.
-So I used the strings program and pipped that into grep to check for any strings with the word <code>pico</code> in the string:</p>
-<pre><code>$ strings disko-1.dd | grep "pico"
+  <p>
+   When I looked inside the contents of the file it looked like it had some comprehensible text.
+So I used the strings program and pipped that into grep to check for any strings with the word
+   <code>
+    pico
+   </code>
+   in the string:
+  </p>
+  <pre><code>$ strings disko-1.dd | grep "pico"
 
 :/icons/appicon
 # $Id: piconv,v 2.8 2016/08/04 03:15:58 dankogai Exp $
@@ -48,14 +114,28 @@ piconv converts the character encoding of either STDIN or files
 Therefore, when both -f and -t are omitted, B&lt;piconv&gt; just acts
 picoCTF{1t5_ju5t_4_5tr1n9_be6031da}
 </code></pre>
-<p>The flag printed right out of the command <code>picoCTF{1t5_ju5t_4_5tr1n9_be6031da}</code> was the correct flag.</p>
-<h4>Disko 2</h4>
-<h5>Description</h5>
-<blockquote>
-<p>Can you find the flag in this disk image? The right one is Linux! One wrong step and its all gone! </p>
-</blockquote>
-<p>Okay so I did the same commands as last. I got to the Strings section and It returned loads of flags:</p>
-<pre><code>picoCTF{4_P4Rt_1t_i5_c03b93aa}
+  <p>
+   The flag printed right out of the command
+   <code>
+    picoCTF{1t5_ju5t_4_5tr1n9_be6031da}
+   </code>
+   was the correct flag.
+  </p>
+  <h4>
+   Disko 2
+  </h4>
+  <h5>
+   Description
+  </h5>
+  <blockquote>
+   <p>
+    Can you find the flag in this disk image? The right one is Linux! One wrong step and its all gone!
+   </p>
+  </blockquote>
+  <p>
+   Okay so I did the same commands as last. I got to the Strings section and It returned loads of flags:
+  </p>
+  <pre><code>picoCTF{4_P4Rt_1t_i5_c03b93aa}
 picoCTF{4_P4Rt_1t_i5_aa9cb033}
 picoCTF{4_P4Rt_1t_i5_30ac9ba3}
 ...
@@ -63,10 +143,19 @@ picoCTF{4_P4Rt_1t_i5_33ba9ac0}
 picoCTF{4_P4Rt_1t_i5_30ba3a9c}
 picoCTF{4_P4Rt_1t_i5_ba390c3a}
 </code></pre>
-<p>While looking through them all I noticed that they all contain the same number of each character seemingly justjumbled up.</p>
-<p>The frequence of the character are <code>2: 3, a. 1: 0, 9, b, c.</code></p>
-<p>I formatted all the flags in a flags.txt, then I make a simple python script to see the frequency of all the flags:</p>
-<pre><code class="language-py">from collections import defaultdict
+  <p>
+   While looking through them all I noticed that they all contain the same number of each character seemingly justjumbled up.
+  </p>
+  <p>
+   The frequence of the character are
+   <code>
+    2: 3, a. 1: 0, 9, b, c.
+   </code>
+  </p>
+  <p>
+   I formatted all the flags in a flags.txt, then I make a simple python script to see the frequency of all the flags:
+  </p>
+  <pre><code class="language-py">from collections import defaultdict
 freq = defaultdict(int)
 with open("flags.txt", "r") as file:
     data = file.read()
@@ -76,7 +165,15 @@ with open("flags.txt", "r") as file:
         if v &gt;= 2:
             print(k, v)
 </code></pre>
-<p>this printed:
-<code>picoCTF{4_P4Rt_1t_i5_ac3ab903} 2</code>
-This was not the correct flag.</p>
-<p>I think I am looking into the wrong thing in this disk. I need to focus on what a disk contains and try to extract that.</p></div></body>
+  <p>
+   this printed:
+   <code>
+    picoCTF{4_P4Rt_1t_i5_ac3ab903} 2
+   </code>
+   This was not the correct flag.
+  </p>
+  <p>
+   I think I am looking into the wrong thing in this disk. I need to focus on what a disk contains and try to extract that.
+  </p>
+ </div>
+</body>
