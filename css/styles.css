@@ -5,6 +5,7 @@
 
 body {
   font-family: Hack, monospace;
+  font-size: 15px;
   max-width: 650px;
   margin: auto auto 0 auto;
 }
@@ -32,6 +33,7 @@ nav a {
 }
 
 code {
+  font-size: 14px;
   overflow-x: auto;
   background-color: #f5f5f5;
   padding: 1px;
@@ -40,6 +42,7 @@ code {
 }
 
 pre {
+  font-size: 14px;
   background-color: #f5f5f5;
   border: 1px solid #ddd;
   border-radius: 4px;
