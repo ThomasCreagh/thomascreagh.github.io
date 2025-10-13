@@ -1,10 +1,6 @@
-# DISKO 1,2,3
-
----
+### DISKO 1,2,3
 
 this is a [pico ctf](https://picoctf.org/) challenge
-
----
 
 #### Disko 1
 

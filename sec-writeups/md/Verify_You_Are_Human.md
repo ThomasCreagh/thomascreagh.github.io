@@ -1,10 +1,6 @@
-# Verify You Are Human
-
----
+### Verify You Are Human
 
 this is a challenge from [huntress](https://ctf.huntress.com) ctf 2025
-
----
 
 #### Description
 
