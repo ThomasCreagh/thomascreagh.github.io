@@ -7,6 +7,7 @@ body {
   font-family: Hack, monospace;
   font-size: 15px;
   max-width: 650px;
+  padding: 0 10px;
   margin: 0 auto 0 auto;
 }
 
@@ -56,3 +57,19 @@ pre code {
   border: none
 }
 
+.page {
+  overflow-wrap: break-word;
+}
+
+blockquote {
+  font-style: italic;
+}
+blockquote > p {
+  display:inline;
+}
+blockquote:before {
+  content: '“';
+}
+blockquote:after {
+  content: '”';
+}
