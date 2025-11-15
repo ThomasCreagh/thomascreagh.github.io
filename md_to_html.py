@@ -7,7 +7,14 @@ print(f"the current working dir is: {base}")
 dirs = ["blogs", "sec-writeups"]
 
 for dir in dirs:
+    print(f"\nConverting {dir} dir...")
     folder_base = os.path.join(base, dir)
+
+    with (
+        open(os.path.join(folder_base, "index.template.html"), "rb") as src,
+        open(os.path.join(folder_base, "index.html"), "wb") as dst
+    ):
+        dst.write(src.read())
 
     files = os.listdir(os.path.join(folder_base, "md"))
 
@@ -15,8 +22,6 @@ for dir in dirs:
         index = bs(temp_file, "html.parser")
 
     documents = index.find("ul", {"class" : "documents"})
-    documents.clear()
-
 
     for file in files:
         new_li = index.new_tag("li")
