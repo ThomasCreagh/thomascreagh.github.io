@@ -13,45 +13,46 @@ The main difference I had to deal with implementing this project in NASM vs C is
 
 This is my file tree for the project:
 ```
+$ tree
 .
-|-- Makefile
-|-- README.md
- -- src
-    |-- add_friend_main.asm
-    |-- create_user_main.asm
-    |-- display_wall_main.asm
-    |-- post_message_main.asm
-    |-- server_main.asm
-    |-- core
-    |   |-- add_friend.asm
-    |   |-- create_user.asm
-    |   |-- display_wall.asm
-    |   |-- post_message.asm
-    |    -- server.asm
-     -- lib
-        |-- append_line.asm
-        |-- cat.asm
-        |-- exit.asm
-        |-- get_txt.asm
-        |-- mkdir.asm
-        |-- parse_input.asm
-        |-- touch.asm
-        |-- user_exists.asm
-        |-- user_in_file.asm
-        |-- io
-        |   |-- close.asm
-        |   |-- open.asm
-        |   |-- print.asm
-        |   |-- printf.asm
-        |   |-- read.asm
-        |   |-- read_line.asm
-        |    -- write.asm
-         -- string
-            |-- strcat.asm
-            |-- strcmp.asm
-            |-- strcpy.asm
-            |-- strlen.asm
-             -- tokenize_str.asm
+├── Makefile
+├── README.md
+└── src
+    ├── add_friend_main.asm
+    ├── core
+    │   ├── add_friend.asm
+    │   ├── create_user.asm
+    │   ├── display_wall.asm
+    │   ├── post_message.asm
+    │   └── server.asm
+    ├── create_user_main.asm
+    ├── display_wall_main.asm
+    ├── lib
+    │   ├── append_line.asm
+    │   ├── cat.asm
+    │   ├── exit.asm
+    │   ├── get_txt.asm
+    │   ├── io
+    │   │   ├── close.asm
+    │   │   ├── open.asm
+    │   │   ├── print.asm
+    │   │   ├── printf.asm
+    │   │   ├── read.asm
+    │   │   ├── read_line.asm
+    │   │   └── write.asm
+    │   ├── mkdir.asm
+    │   ├── parse_input.asm
+    │   ├── string
+    │   │   ├── strcat.asm
+    │   │   ├── strcmp.asm
+    │   │   ├── strcpy.asm
+    │   │   ├── strlen.asm
+    │   │   └── tokenize_str.asm
+    │   ├── touch.asm
+    │   ├── user_exists.asm
+    │   └── user_in_file.asm
+    ├── post_message_main.asm
+    └── server_main.asm
 
 6 directories, 33 files
 ```
