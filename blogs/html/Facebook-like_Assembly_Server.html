@@ -53,11 +53,252 @@
    <h3>
     Facebook-like Asssembly Server
    </h3>
-   <h5>
-    Description
-   </h5>
+   <h4>
+    Introduction
+   </h4>
    <p>
-    abc
+    This project is part of an assignment I had to do at Trinity College Dublin in the module Computer Architecture Two. In this project, I was tasked with implementing a simplified Facebook-like social media server using IA-32 NASM assembly on Linux. The goal was to reproduce the core functionalities of a server that manages users, friends, and message exchanges, but to do so entirely through low-level system calls rather than high-level language abstractions. Throughout this project, I created assembly programs capable of creating users, adding friends, posting messages, and displaying message walls.
+   </p>
+   <p>
+    The project code can be found here:
+    <a href="https://github.com/ThomasCreagh/learn-x86/tree/main/assignments/00">
+     https://github.com/ThomasCreagh/learn-x86/tree/main/assignments/00
+    </a>
+   </p>
+   <h4>
+    NASM vs C
+   </h4>
+   <p>
+    The main difference I had to deal with implementing this project in NASM vs C is that I had to rewrite a lot of the C library. Others doing the same project didn't do this but I though I would like to learn more about the C library and how these functions might have been implemented.
+   </p>
+   <p>
+    This is my file tree for the project:
+   </p>
+   <pre><code>.
+|-- Makefile
+|-- README.md
+ -- src
+    |-- add_friend_main.asm
+    |-- create_user_main.asm
+    |-- display_wall_main.asm
+    |-- post_message_main.asm
+    |-- server_main.asm
+    |-- core
+    |   |-- add_friend.asm
+    |   |-- create_user.asm
+    |   |-- display_wall.asm
+    |   |-- post_message.asm
+    |    -- server.asm
+     -- lib
+        |-- append_line.asm
+        |-- cat.asm
+        |-- exit.asm
+        |-- get_txt.asm
+        |-- mkdir.asm
+        |-- parse_input.asm
+        |-- touch.asm
+        |-- user_exists.asm
+        |-- user_in_file.asm
+        |-- io
+        |   |-- close.asm
+        |   |-- open.asm
+        |   |-- print.asm
+        |   |-- printf.asm
+        |   |-- read.asm
+        |   |-- read_line.asm
+        |    -- write.asm
+         -- string
+            |-- strcat.asm
+            |-- strcmp.asm
+            |-- strcpy.asm
+            |-- strlen.asm
+             -- tokenize_str.asm
+
+6 directories, 33 files
+</code></pre>
+   <p>
+    I had to flatten this due to the way submittion works but this was the intended file structure.
+As you can see I wrote a lot of wrapper functions that would handle the specific system call numbers for me or to process strings and memory. Creating all these functions allowed me to program the main application in a higher level fashion.
+   </p>
+   <p>
+    I tried to embrase the Unix philosophy:
+   </p>
+   <blockquote>
+    <p>
+     Write programs that do one thing and do it well. - Doug McIlroy.
+    </p>
+   </blockquote>
+   <p>
+    One of the great advantages of seperating the subroutines into different files was that my lables like
+    <code>
+     .loop:
+    </code>
+    didnt need any unique name because it wasn't conflicting with other loop labels of other subroutines. To help myself, I added a subroutine comment header to each file describing what the subroutine does, what inputs it takes (like
+    <code>
+     [ebp+8]
+    </code>
+    ) and what it returns in eax.
+   </p>
+   <h4>
+    Design Decisions
+   </h4>
+   <p>
+    Some of the design decisions I made were to:
+   </p>
+   <ul>
+    <li>
+     Use strcat for accessing the files instead of changing directorys using system calls for better efficiency.
+    </li>
+    <li>
+     Using a file/chunk buffer for reading files. This ment I was not using a system call for every byte which would be extermely slow.
+    </li>
+    <li>
+     Implemented a
+     <code>
+      cat.asm
+     </code>
+     subroutine that would print in 1024 bytes to improve performance.
+    </li>
+    <li>
+     Implemented the server input parsing like bash that would trim any white space, handle quotes correctly and remove the quote character from inputs. One of the ways I could improve on my input parsing, would be to hadle more input as I only have a 512 byte buffer to read stdin.
+    </li>
+    <li>
+     I created sepreate main files for each of my executables which allowed me to directly call the subroutines in the
+     <code>
+      server.asm
+     </code>
+     program instead of having to use the
+     <code>
+      exec
+     </code>
+     system call to increase efficiency.
+    </li>
+    <li>
+     I did also implement symetric friending which I had to remove due to the submittion portal test cases not liking it, even though it allowed it in the specifications.
+    </li>
+   </ul>
+   <h4>
+    Struggles
+   </h4>
+   <p>
+    Encapsulating the subroutines as such, worked well but it did pose some challanges like in
+    <code>
+     read_line.asm
+    </code>
+    and in how I was going to implement
+    <code>
+     printf.asm
+    </code>
+    .
+    <code>
+     read_line.asm
+    </code>
+    was more difficult to implement as a seprate routine as I had to pass a lot of input varible to keep track of where I was in the buffers and file:
+    <code>
+     file_descriptor, line_buffer, file_buffer, file_buffer_offset, bytes_read
+    </code>
+    where all needed for each line.
+   </p>
+   <p>
+    My main fucntions were required to print out responses to executing the programs. One of the challanges of this was to dynamically print out the input names given e.g.
+    <code>
+     ./add_friend tom bob
+    </code>
+    should output
+    <code>
+     nok: user tom does not exist
+    </code>
+    if tom hasn't been created yet. I had created a
+    <code>
+     print.asm
+    </code>
+    subroutine and I wanted to create
+    <code>
+     printf.asm
+    </code>
+    subroutine to allow me to insert strings into a print statement dynamically. I tought I would seprate the formating to another subroutine called
+    <code>
+     format.asm
+    </code>
+    that would take N inputs and dynamaically write to a new buffer. The problem I faced was that since
+    <code>
+     printf.asm
+    </code>
+    had N inputs I wasn't able to just forward the inputs to
+    <code>
+     format.asm
+    </code>
+    without making it much more complicated. So in this case I just implemented the formatting inside
+    <code>
+     printf.asm
+    </code>
+    .
+   </p>
+   <p>
+    Having a
+    <code>
+     printf
+    </code>
+    function that replaced
+    <code>
+     $
+    </code>
+    with what ever input you pushed allowed me to make my
+    <code>
+     section .data
+    </code>
+    sections much cleaner instead of having to split up all the strings in order to string concatenate them together.
+   </p>
+   <p>
+    In the creation of this project I didn't use AI tools very frequently. I mainly used them to see if there was a better impementation of a subroutine after I wrote it. I did find some forums interesting to read on the implementation of C fucntions such as the
+    <code>
+     strcpy
+    </code>
+    function. In this stackoverflow discussion
+    <a href="https://stackoverflow.com/questions/3561427/strcpy-return-value">
+     https://stackoverflow.com/questions/3561427/strcpy-return-value
+    </a>
+    , they made a great point about why functions in the
+    <code>
+     string.h
+    </code>
+    library return the pointer to the start of the destination string that you give it.
+   </p>
+   <p>
+    This means you may have to recompute the size of the string if you did
+    <code>
+     strcpy
+    </code>
+    or another simalar fucntion that iterates over the destination string. So in my strcpy implementation I return the pointer to the null terminating character of the destination string. This allows me to use concatonate strings much more efficiently as I don't have to compute the length of the destination string after a strcpy.
+   </p>
+   <h4>
+    Debugging
+   </h4>
+   <p>
+    In order to debug my project I used the program
+    <code>
+     gdb
+    </code>
+    . It was extemely useful to be able to step through my program line by line and print out memory address's or register values.
+e.g.
+   </p>
+   <pre><code>(gdb) x/s *(char**)($ebp+8)
+0xffff9bd0: "tom"
+</code></pre>
+   <p>
+    This allowed me to see the string that was past as the first argument into the subroutine.
+   </p>
+   <h4>
+    Conclusion
+   </h4>
+   <p>
+    Overall I learned a lot in creating this project and I am very happy with the outcome. I hope to bring some of the knowlege I gain in this to my future projects.
+   </p>
+   <p>
+    This report can be seen here:
+    <a href="https://thomascreagh.github.io/blogs/html/Facebook-like_Assembly_Server.html">
+     https://thomascreagh.github.io/blogs/html/Facebook-like_Assembly_Server.html
+    </a>
    </p>
   </div>
  </body>
