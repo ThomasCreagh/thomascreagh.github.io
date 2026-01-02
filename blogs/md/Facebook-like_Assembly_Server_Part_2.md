@@ -76,4 +76,4 @@ The main method of debugging I used was to do debugging writes to stdout in orde
 Over all I really enjoyed looking at RISCV64 and its benifits. I learned a lot about FIFO pipes and how they interact with blocking. My goal with the knowlege I've gained making this project is to understand my operating system better and how you can interact with it in unique ways.
 
 
-This report can be seen here: [https://thomascreagh.github.io/blogs/html/Facebook-like_Assembly_Server.html](https://thomascreagh.github.io/blogs/html/Facebook-like_Assembly_Server_2.html)
+This report can be seen here: [https://thomascreagh.github.io/blogs/html/Facebook-like_Assembly_Server_Part_2.html](https://thomascreagh.github.io/blogs/html/Facebook-like_Assembly_Server_Part_2.html)
