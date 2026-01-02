@@ -1,4 +1,4 @@
-### Facebook-like Asssembly Server
+### Facebook-like Asssembly Server Part 1
 
 #### Introduction
 
@@ -103,4 +103,4 @@ This allowed me to see the string that was past as the first argument into the s
 
 Overall I learned a lot in creating this project and I am very happy with the outcome. I hope to bring some of the knowlege I gain in this to my future projects.
 
-This report can be seen here: [https://thomascreagh.github.io/blogs/html/Facebook-like_Assembly_Server.html](https://thomascreagh.github.io/blogs/html/Facebook-like_Assembly_Server.html)
+This report can be seen here: [https://thomascreagh.github.io/blogs/html/Facebook-like_Assembly_Server.html](https://thomascreagh.github.io/blogs/html/Facebook-like_Assembly_Server_1.html)
