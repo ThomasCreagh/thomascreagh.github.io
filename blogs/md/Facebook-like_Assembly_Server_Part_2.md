@@ -66,14 +66,19 @@ end_of_file
 ```
 Between the ambiguous test results and the fact that it was working on my machine it was very hard to debug and I was practically just guessing what was the problems.
 
+These two tests never appeared to be working unfortuanetly. I tried to make sure all the files were closed when they needed to be and that the server looks for a new client connection after every request whether successful or not. I also tried making sure that args weren't being read from the clients termainal if they were not given but none of these things stopped the "client crash" in the testing enviorment.
+
+My hypothesis is that it may be due to my buffered reading and writing which meant that I had to implement my client with a reading loop which differed to my peers implementation. I don't know exactly what is going wrong with it or if it has to do with the way the pipes are blocking in an edge case when a "display wall" request is sent. I do wish further errors were provided in order to assist me in finding the root cause of these crashes.
+
+I didn't use AI tools very frequently in the creation of this project. I mainly used it to see if there was a better impementation of a subroutine after I wrote it or used it to gather information about how pipes worked.
 
 #### Debugging
 
-The main method of debugging I used was to do debugging writes to stdout in order to see the strings that were building at different stages of the program.
+The main method of debugging I used was to do debugging writes to stdout in order to see the strings that were building at different stages of the program. I did attempt to use gdb with 2 terminals to go step by step in my project but I never got it to work properly. If I was able to get gdb working it would have made debugging much more efficient.
 
 #### Conclusion
 
-Overall I really enjoyed looking at RISCV64 and its benifits. I learned a lot about FIFO pipes and how they interact with blocking. My goal, with the knowlege I've gained making this project, is to understand my operating system better and how you can interact with it in unique ways.
+Overall I really enjoyed looking at RISCV64 and its benifits. I learned a lot about FIFO pipes and how they interact with blocking. My goal, with the knowlege I've gained making this project, is to understand my operating system better and how you can interact with it in unique ways. I would love to continue to refine this project and allow for multiprocessing so many clients could communicate to the server at once. And also to see the differences between this project and one thats in a production enviorment written in assembly.
 
 
 This report can be seen here: [https://thomascreagh.github.io/blogs/html/Facebook-like_Assembly_Server_Part_2.html](https://thomascreagh.github.io/blogs/html/Facebook-like_Assembly_Server_Part_2.html)
