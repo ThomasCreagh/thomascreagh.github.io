@@ -1,5 +1,5 @@
 Thanks for finding this, please contact me if any issues are found.
 
-Contact: mailto:security.txt@0x74.net
+Contact: mailto:security.txt@thomascreagh.com
 Expires: 2027-01-01T00:00:00.000Z
 Preferred-Languages: en, ga
