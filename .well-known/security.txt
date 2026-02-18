@@ -1,5 +1,17 @@
-Thanks for finding this, please contact me if any issues are found.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-Contact: mailto:security.txt@thomascreagh.com
+# Thanks for finding this, please contact me if any issues are found.
+Contact: mailto:security.txt@thomascreagh.net
 Expires: 2027-01-01T00:00:00.000Z
+Encryption: https://thomascreagh.com/pgp-key.asc
 Preferred-Languages: en, ga
+Canonical: https://thomascreagh.com/.well-known/security.txt
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEARYKAB0WIQSR9GVb5W3F3j7142dn2CMyquRlLQUCaZYfAQAKCRBn2CMyquRl
+LVpWAQDp2q2AWlw7rOQTnFIrtLRA4JK6kMxov7aBqDCKMcdq7wEAonJhtcOx/lnG
+x4JGcftDNdO1eYnLRmeWaXUf97J/Eg4=
+=7Qux
+-----END PGP SIGNATURE-----
