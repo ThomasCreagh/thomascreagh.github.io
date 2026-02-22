@@ -83,11 +83,7 @@ Pipes were a big portion of this project in which I was tasked to use them to fa
     RISCV64 vs x86
    </h4>
    <p>
-    The client program was to be written in riscv64. The syntax had similarities to x86 especially with the pseudoinstructions. One of the recommended practices was to use a C driver to assist in helping pass inputs to the assembly program. I originally used a C driver but due to my implementation I was able to rename the start of my assembly program to
-    <code>
-     main
-    </code>
-    and use argv and argc as you would in C.
+    The client program was to be written in riscv64. The syntax had simalarities to x86 especially with the psudoinstructions. One of the recommended practices was to use a C driver to assist in helping pass inputs to the assembly program. I originally used a C driver but due to my implementation I was able to rename the start of my assembly program to main and use argv and argc as you would in C.
 Original C driver:
    </p>
    <pre><code>#include &lt;stdio.h&gt;
@@ -103,24 +99,20 @@ int main(int argc, char **argv) {
     Design Decisions
    </h4>
    <p>
-    Some of the design decisions I made were as follows:
+    Some of the deisng decisions I made were as follows:
    </p>
    <ul>
     <li>
-     Using blocking pipes. This is allowed for more robust communication between the client and the server.
+     Using blocking pipe. This is allowed for more robust communication between the client and the server.
     </li>
     <li>
-     Client reading pipe in a loop till close of pipe from server. This was because of how my
-     <code>
-      cat
-     </code>
-     function worked. It writes to the pipe in multiple writes to allow for large files. But this caused my client to have to read multiple lines until EOF or else some lines would get stuck in the pipe.
+     Client reading pipe in a loop till close of pipe from server. This was because of how my cat function worked.It writes to the pipe in multiple writes to allow for large files. But this caused my client to have to read multiple lines until EOF or else some lines would get stuck in the pipe.
     </li>
     <li>
-     Had my utility subroutines in different files to create better separation.
+     Had my utility subroutines in different files to create better speration.
     </li>
     <li>
-     My server didn't have much changes compared to just using stdout. I just created a global client and server file descriptor variables to allow the entire program to read and write from them respectively.
+     My server didnt have much changes compared to just using stdout. I just created a global client and server fd varibles to allow the entire program to read and write from them respectively.
     </li>
     <li>
      Each loop of the server it tries to create a connection with the client which allows the server to stay running even if multiple different clients want to access it in one run.
@@ -149,7 +141,7 @@ I had 2 tests that returned
     <code>
      Client Crashed
     </code>
-    . With no indication of whether that was a segmentation fault or any other error.
+    . With no indication of whether that was a seg fault or any other error.
    </p>
    <pre><code>Running test: Add Friend when they don't exist (worth 5 points)
 Test failed: client crashed
@@ -168,7 +160,7 @@ anthony: hi
 end_of_file
 </code></pre>
    <p>
-    Between the ambiguous test results and the fact that it was working on my machine it was very hard to debug and I was practically just guessing what was the problems.
+    Between the ambiguous test results and the fact that it was working on my machine it was very hard to debug and I was practicaly just guessing what was the problems.
    </p>
    <h4>
     Debugging
@@ -180,13 +172,7 @@ end_of_file
     Conclusion
    </h4>
    <p>
-    Overall I really enjoyed looking at RISCV64 and its benifits. I learned a lot about FIFO pipes and how they interact with blocking. My goal, with the knowlege I've gained making this project, is to understand my operating system better and how you can interact with it in unique ways.
-   </p>
-   <p>
-    This report can be seen here:
-    <a href="https://thomascreagh.github.io/blogs/html/Facebook-like_Assembly_Server_Part_2.html">
-     https://thomascreagh.github.io/blogs/html/Facebook-like_Assembly_Server_Part_2.html
-    </a>
+    Over all I really enjoyed looking at RISCV64 and its benifits. I learned a lot about FIFO pipes and how they interact with blocking. My goal with the knowlege I've gained making this project is to understand my operating system better and how you can interact with it in unique ways.
    </p>
   </div>
  </body>

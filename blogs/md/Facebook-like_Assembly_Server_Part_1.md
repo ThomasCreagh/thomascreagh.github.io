@@ -102,5 +102,3 @@ This allowed me to see the string that was past as the first argument into the s
 #### Conclusion
 
 Overall I learned a lot in creating this project and I am very happy with the outcome. I hope to bring some of the knowlege I gain in this to my future projects.
-
-This report can be seen here: [https://thomascreagh.github.io/blogs/html/Facebook-like_Assembly_Server_Part_1.html](https://thomascreagh.github.io/blogs/html/Facebook-like_Assembly_Server_Part_1.html)
